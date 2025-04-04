@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>CAPTCHA Сервис</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Проверка CAPTCHA</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+              {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+        <img src="{{ url_for('captcha_image') }}" alt="CAPTCHA Image" id="captcha-image">
+        <form method="post" action="{{ url_for('captcha') }}">
+            <input type="text" name="captcha" placeholder="Введите ответ" required>
+            <button type="submit">Проверить</button>
+        </form>
+        <button id="refresh-captcha">Обновить CAPTCHA</button>
+    </div>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>
